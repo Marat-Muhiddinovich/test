@@ -1,7 +1,15 @@
-from playwright.sync_api import sync_playwright, Page
+import pytest
+from api.users_api import UsersAPI
 
-def test_example(page: Page) -> None:
-    page.goto("https://playwright.dev/python/docs/intro")
-    assert page.title() == "Fast and reliable end-to-end testing for modern web apps | Playwright"  
-    assert "playwright" in page.url
-    page.screenshot(path="example.png")
+@pytest.mark.api
+def test_get_all_users(api_context):
+    users_api = UsersAPI(api_context)
+    response = users_api.get_all_users()
+    assert response.status == 200 
+    data = response.json()
+    assert "users" in data
+    assert isinstance(data["users"], list)
+    assert len(data["users"]) > 0
+    assert "total" in data
+
+    print(f"Total users: {data['total']}")
