@@ -11,5 +11,4 @@ def test_get_all_users(api_context):
     assert isinstance(data["users"], list)
     assert len(data["users"]) > 0
     assert "total" in data
-
     print(f"Total users: {data['total']}")
