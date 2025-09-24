@@ -1,6 +1,7 @@
 import pytest
 from api.users_api import UsersAPI
 
+
 @pytest.mark.api
 def test_get_all_users(api_context):
     users_api = UsersAPI(api_context)
@@ -12,3 +13,5 @@ def test_get_all_users(api_context):
     assert len(data["users"]) > 0
     assert "total" in data
     print(f"Total users: {data['total']}")
+
+
