@@ -1,4 +1,4 @@
-import pytest
+import pytest # type: ignore
 from api.login_api import LoginAPI
 import json
 from config.settings import USERNAME, PASSWORD, EXPIRES_IN

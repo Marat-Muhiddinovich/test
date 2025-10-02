@@ -1,10 +1,10 @@
-import pytest
+import pytest # type: ignore
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from config.settings import BASE_URL, USERNAME, PASSWORD, EXPIRES_IN
 from api.login_api import LoginAPI
-from playwright.sync_api import Playwright, APIRequestContext
+from playwright.sync_api import Playwright, APIRequestContext # type: ignore
 
 
 @pytest.fixture(scope="session")
