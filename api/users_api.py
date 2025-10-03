@@ -74,3 +74,24 @@ class AddUserAPI(APIClient):
     def add_user(self, user_data: dict):
         return self.post(f"{self.base_endpoint}/add", data=user_data)
     
+# update user by ID API client
+class UpdateUsersByIDAPI(APIClient):
+    def __init__(self, context):
+        super().__init__(context)
+        self.base_endpoint = "/users"
+    
+    def update_user_by_id(self, user_id=int, user_data: dict={}):
+        if not isinstance(user_id, int) or user_id <= 0:
+            raise ValueError("user_id must be a positive integer")
+        return self.put(f"{self.base_endpoint}/{user_id}", data=user_data)
+    
+#delete user by ID API client
+class DeleteUsersByIDAPI(APIClient):
+    def __init__(self, context):
+        super().__init__(context)
+        self.base_endpoint = "/users"
+    
+    def delete_user_by_id(self, user_id=int):
+        if not isinstance(user_id, int) or user_id <= 0:
+            raise ValueError("user_id must be a positive integer")
+        return self.delete(f"{self.base_endpoint}/{user_id}")

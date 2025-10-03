@@ -8,6 +8,8 @@ from api.users_api import UserGetByIDAPI
 from api.users_api import GetUserPostsAPI
 from api.users_api import AddUserAPI
 from api.new_user import new_user
+from api.users_api import UpdateUsersByIDAPI
+from api.users_api import DeleteUsersByIDAPI
 
 # get all users test
 @pytest.mark.api
@@ -136,6 +138,7 @@ def test_get_user_posts(api_context):
         assert post["userId"] == user_id
     print(f"user with ID {user_id} posts: {data}")
 
+# add new user test
 @pytest.mark.api
 def test_add_user(api_context):
     users_api = AddUserAPI(api_context)
@@ -148,4 +151,33 @@ def test_add_user(api_context):
     assert data["lastName"] == add_user["lastName"]
     assert data["age"] == add_user["age"]
     print(f"Added new user with ID {data['id']}: {data}")
+
+# update user by ID test
+@pytest.mark.api
+def test_update_user_by_id(api_context):
+    users_api = UpdateUsersByIDAPI(api_context)
+    user_id=1
+    update_data = {
+        "firstName": "UpdatedName",
+        "lastName": "UpdatedLastName",
+        "age": 30
+    }
+    response = users_api.update_user_by_id(user_id, update_data)
+    assert response.status == 200
+    data = response.json()
+    assert data["firstName"] == update_data["firstName"]
+    assert data["lastName"] == update_data["lastName"]
+    assert data["age"] == update_data["age"]    
+    print(f"Updated user with ID {user_id}: {data}")    
     
+# delete user by ID test
+@pytest.mark.api
+def test_delete_user_by_id(api_context):
+    users_api = DeleteUsersByIDAPI(api_context)
+    user_id=1
+    response = users_api.delete_user_by_id(user_id)
+    assert response.status == 200 or response.status == 204
+    data = response.json() if response.status != 204 else {}
+    print(f"Deleted user with ID {user_id}")
+    assert data['isDeleted'] == True
+    assert data['id'] == user_id
