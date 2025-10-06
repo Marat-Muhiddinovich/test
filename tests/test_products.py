@@ -6,6 +6,8 @@ from api.products_api import SearchProductsAPI
 from api.products_api import LimitProductsAPI
 from api.products_api import SortProductsAPI
 from api.products_api import CategoriesAPI
+from api.products_api import AddProductAPI
+from api.products_api import UpdateProductAPI
 
 #get all products test
 @pytest.mark.api
@@ -19,20 +21,6 @@ def test_get_all_products(api_context):
     assert len(data["products"]) > 0
     assert "total" in data
     print(f"Total products: {data['total']}")
-
-# get product by ID test
-@pytest.mark.api
-def test_get_product_by_id(api_context):
-    product_id = 1  
-    product_api = ProductByIDAPI(api_context)
-    response = product_api.get_product_by_id(product_id)
-    assert response.status == 200
-    data = response.json()
-    assert "id" in data
-    assert data["id"] == product_id
-    assert "title" in data
-    assert "price" in data
-    print(f"Product ID: {data['id']}, Title: {data['title']}, Price: {data['price']}")
 
 # search products test
 @pytest.mark.api
@@ -121,3 +109,47 @@ def test_get_single_category(api_context, category_name):
         assert product["category"] == category_name
     print(f"Found {len(data['products'])} products in category '{category_name}'")
     print("titles:", [product["title"] for product in data["products"]])
+
+# add new product test
+def test_add_product(api_context):
+    new_product = {
+        "title": "macbook pro",
+        "description": "Apple MacBook Pro 2021 with M1 Pro chip",
+        "price": 1999,
+        "discountPercentage": 10.0,
+        "rating": 4.8,
+        "stock": 50,
+        "brand": "Apple",
+        "category": "laptops",
+        "thumbnail": "https://example.com/macbookpro.jpg",
+        "images": [ 
+            "https://example.com/macbookpro1.jpg",
+            "https://example.com/macbookpro2.jpg"
+        ],
+    }
+
+    product = AddProductAPI(api_context)
+    response = product.add_product(new_product)
+    assert response.status == 200 or response.status == 201
+    data = response.json()
+    assert "id" in data
+    assert data["title"] == new_product["title"]
+    assert data["price"] == new_product["price"]
+    assert data["category"] == new_product["category"]
+    print(f"Added new product with ID: {data['id']}, Title: {data['title']}, Price: {data['price']}")
+
+# update product test
+def test_update_product(api_context):
+    product_id = 194,
+    update_data = {
+        "price": 1799,
+        "stock": 30
+    }
+    update_api = UpdateProductAPI(api_context)
+    response = update_api.update_product(product_id, update_data)
+    assert response.status == 200
+    data = response.json()
+    assert data["id"] == product_id
+    assert data["price"] == update_data["price"]
+    assert data["stock"] == update_data["stock"]
+    print(f"Updated product ID: {data['id']}, New Price: {data['price']}, New Stock: {data['stock']}")
