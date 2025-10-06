@@ -66,3 +66,27 @@ class CategoriesAPI(APIClient):
         if not isinstance(category_name, str) or not category_name.strip():
             raise ValueError("category_name must be a non-empty string")
         return self.get(f"{self.base_endpoint}/{category_name}")
+    
+# add new product
+class AddProductAPI(APIClient):
+    def __init__(self, context):
+        super().__init__(context)
+        self.base_endpoint = "/products/add"
+
+    def add_product(self, product_data=dict):
+        if not isinstance(product_data, dict) or not product_data:
+            raise ValueError("product_data must be a non-empty dictionary")
+        return self.post(self.base_endpoint, data=product_data)
+    
+# update product
+class UpdateProductAPI(APIClient):
+    def __init__(self, context):
+        super().__init__(context)
+        self.base_endpoint = "/products"
+
+    def update_product(self, product_id=int, update_data=dict):
+        if not isinstance(product_id, int) or product_id > 0:
+            raise ValueError("product_id must be a positive integer")
+        if not isinstance(update_data, dict) or not update_data:
+            raise ValueError("update_data must be a non-empty dictionary")
+        return self.put(f"{self.base_endpoint}/{product_id}", data=update_data)
