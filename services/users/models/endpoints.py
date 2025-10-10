@@ -1,0 +1,3 @@
+BASE_ENDPOINT = "/user"
+LOGIN = f"{BASE_ENDPOINT}/login"
+PROFILE = f"{BASE_ENDPOINT}/me"

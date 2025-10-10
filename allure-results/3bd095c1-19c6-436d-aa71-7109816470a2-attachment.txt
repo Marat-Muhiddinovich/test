@@ -1,0 +1,2 @@
+[32mINFO    [0m api.base_api:base_api.py:14 Get /users?limit=5&skip=2&select=firstName,lastName,age
+[32mINFO    [0m api.base_api:base_api.py:16 Response: 200 - {"users":[{"id":3,"firstName":"Sophia","lastName":"Brown","age":42},{"id":4,"firstName":"James","lastName":"Davis","age":45},{"id":5,"firstName":"Emma","lastName":"Miller","age":30},{"id":6,"firstName":"Olivia","lastName":"Wilson","age":22},{"id":7,"firstName":"Alexander","lastName":"Jones","age":38}],"total":208,"skip":2,"limit":5}

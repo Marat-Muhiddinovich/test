@@ -1,0 +1,2 @@
+[32mINFO    [0m api.base_api:base_api.py:14 Get /users/search/?q=NonExistentName
+[32mINFO    [0m api.base_api:base_api.py:16 Response: 200 - {"users":[],"total":0,"skip":0,"limit":0}

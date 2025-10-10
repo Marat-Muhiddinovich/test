@@ -1,9 +1,20 @@
+import allure # type: ignore
+from config.headers import get_default_headers
+from core.logger import get_logger
+
+logger = get_logger(__name__)
+
 class APIClient:
     def __init__(self, context):
         self.context = context
 
-    def get(self, endpoint: str, headers: dict = None):
-        return self.context.get(endpoint, headers=headers)
+    @allure.step("Get request to endpoint")
+    def get(self, endpoint: str, token: str=None):
+        headers = get_default_headers(token)
+        logger.info(f"Get {endpoint}")
+        response = self.context.get(endpoint, headers=headers)
+        logger.info(f"Response: {response.status} - {response.text()}")
+        return response
     
     def post(self, endpoint: str, data: dict, headers: dict = None):
         return self.context.post(endpoint, data=data, headers=headers)

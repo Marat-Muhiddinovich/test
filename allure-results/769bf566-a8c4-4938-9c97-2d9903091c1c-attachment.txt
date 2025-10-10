@@ -1,0 +1,2 @@
+[32mINFO    [0m api.base_api:base_api.py:14 Get /products?limit=5&skip=5&select=title,price, category
+[32mINFO    [0m api.base_api:base_api.py:16 Response: 200 - {"products":[{"id":6,"title":"Calvin Klein CK One","price":49.99},{"id":7,"title":"Chanel Coco Noir Eau De","price":129.99},{"id":8,"title":"Dior J'adore","price":89.99},{"id":9,"title":"Dolce Shine Eau de","price":69.99},{"id":10,"title":"Gucci Bloom Eau de","price":79.99}],"total":194,"skip":5,"limit":5}
